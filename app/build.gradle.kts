@@ -15,25 +15,25 @@ plugins {
 }
 
 android {
-    val releaseType = readProperties(file("../package.properties")).getProperty("releaseType")
+//    val releaseType = readProperties(file("../package.properties")).getProperty("releaseType")
     val myVersionName = "." + "git rev-parse --short=6 HEAD".runCommand(workingDir = rootDir)
-    if (releaseType.contains("\"")) {
-        throw IllegalArgumentException("releaseType must not contain \"")
-    }
+//    if (releaseType.contains("\"")) {
+//        throw IllegalArgumentException("releaseType must not contain \"")
+//    }
 
     namespace = "org.akanework.gramophone"
     compileSdk = 34
 
-    signingConfigs {
-        create("release") {
-            if (project.hasProperty("AKANE_RELEASE_KEY_ALIAS")) {
-                storeFile = file(project.properties["AKANE_RELEASE_STORE_FILE"].toString())
-                storePassword = project.properties["AKANE_RELEASE_STORE_PASSWORD"].toString()
-                keyAlias = project.properties["AKANE_RELEASE_KEY_ALIAS"].toString()
-                keyPassword = project.properties["AKANE_RELEASE_KEY_PASSWORD"].toString()
-            }
-        }
-    }
+//    signingConfigs {
+//        create("release") {
+//            if (project.hasProperty("AKANE_RELEASE_KEY_ALIAS")) {
+//                storeFile = file(project.properties["AKANE_RELEASE_STORE_FILE"].toString())
+//                storePassword = project.properties["AKANE_RELEASE_STORE_PASSWORD"].toString()
+//                keyAlias = project.properties["AKANE_RELEASE_KEY_ALIAS"].toString()
+//                keyPassword = project.properties["AKANE_RELEASE_KEY_PASSWORD"].toString()
+//            }
+//        }
+//    }
 
     defaultConfig {
         applicationId = "org.akanework.gramophone"
@@ -45,11 +45,11 @@ android {
         targetSdk = 34
         versionCode = 6
         versionName = "1.0.4.1"
-        if (releaseType != "Release") {
-            versionNameSuffix = myVersionName
-        }
+//        if (releaseType != "Release") {
+//            versionNameSuffix = myVersionName
+//        }
         if (project.hasProperty("AKANE_RELEASE_KEY_ALIAS")) {
-            signingConfig = signingConfigs["release"]
+//            signingConfig = signingConfigs["release"]
         }
         buildConfigField(
             "String",
@@ -59,7 +59,8 @@ android {
         buildConfigField(
             "String",
             "RELEASE_TYPE",
-            "\"$releaseType\""
+//            "\"$releaseType\""
+            "\"$\""
         )
         setProperty("archivesBaseName", "Gramophone-$versionName${versionNameSuffix ?: ""}")
 
@@ -124,7 +125,7 @@ android {
         debug {
             isPseudoLocalesEnabled = true
             if (project.hasProperty("AKANE_RELEASE_KEY_ALIAS")) {
-                signingConfig = signingConfigs["release"]
+//                signingConfig = signingConfigs["release"]
             }
         }
     }
@@ -199,8 +200,8 @@ fun String.runCommand(
     commandLine(split(' '))
 }.standardOutput.asText.get().removeSuffixIfPresent("\n")
 
-fun readProperties(propertiesFile: File) = Properties().apply {
-    propertiesFile.inputStream().use { fis ->
-        load(fis)
-    }
-}
+//fun readProperties(propertiesFile: File) = Properties().apply {
+//    propertiesFile.inputStream().use { fis ->
+//        load(fis)
+//    }
+//}
